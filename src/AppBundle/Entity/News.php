@@ -64,9 +64,9 @@ class News
     /**
      * @return mixed
      */
-    public function setDate()
+    public function setDate(\DateTime $date = null)
     {
-        $this->date  = new \DateTime();
+        $this->date  = $date;
     }
 
     /**
