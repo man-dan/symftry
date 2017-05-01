@@ -14,9 +14,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Form\Extension\Core\Type\DateType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+
 
 
 class NewsController extends Controller
@@ -28,9 +26,9 @@ class NewsController extends Controller
     {
         $news = new News();
         $form = $this->createFormBuilder($news)
-            ->add('title', TextType::class)
-            ->add('date', DateType::class)
-            ->add('create', SubmitType::class, ['label' => 'Create News'])
+            ->add('title','text')
+            ->add('date','date')
+            ->add('create','submit', ['label' => 'Create News'])
             ->getForm();
 
         $form->handleRequest($request);
@@ -40,10 +38,31 @@ class NewsController extends Controller
              $em = $this->getDoctrine()->getManager();
              $em->persist($news);
              $em->flush();
-             echo "<script>alert('Successfully created!')</script>";
-            return $this->forward($this->routeToControllerName('news'));
+             return $this->redirect($this->generateUrl('news'));
         }
-        return $this->render('news/new.html.twig', ['form' => $form->createView(),'title'=>"New News"]);
+        return $this->render('news/new.html.twig', ['form' => $form->createView(),'title'=>'New News']);
+    }
+
+    /**
+     * @Route("/news/edit/{id}",name="edit")
+     */
+
+    public function editAction($id, Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $news = $em->getRepository('AppBundle:News')->find($id);
+        $form = $this->createFormBuilder($news)
+            ->add('title', 'text')
+            ->add('date','date')
+            ->add('create','submit', ['label' => 'Update News'])
+            ->getForm();
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted()) {
+            $em->flush();
+            return $this->redirect($this->generateUrl('news'));
+        }
+        return $this->render('news/new.html.twig', ['form' => $form->createView(),'title'=>'Update News']);
     }
 
 
@@ -53,11 +72,18 @@ class NewsController extends Controller
     public function indexAction()
     {
         $news = $this->getDoctrine()->getRepository('AppBundle:News')->findAll();
-        return $this->render('news/index.html.twig',['news'=>$news, 'title'=>"Новости"]);
+        return $this->render('news/index.html.twig',['news'=>$news, 'title'=>'Новости']);
     }
-    private function routeToControllerName($routename) {
-        $routes = $this->get('router')->getRouteCollection();
-        return $routes->get($routename)->getDefaults()['_controller'];
+
+    /**
+     * @Route("/news/delnews/{id}",name = "delnews")
+     */
+    public function delAction($id)
+    {   $em = $this->getDoctrine()->getManager();
+        $news = $em->getRepository('AppBundle:News')->find($id);
+        $em->remove($news);
+        $em->flush();
+        return $this->redirect($this->generateUrl('news'));
     }
 
 
