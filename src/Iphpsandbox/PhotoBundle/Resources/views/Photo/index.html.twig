@@ -1,0 +1,40 @@
+
+{% extends 'base.html.twig' %}
+{% block title %}{{ title }}{% endblock %}
+
+
+{% block body %}
+<center>
+<h2>Загруженные фотографии</h2>
+
+
+
+    {% for photo in photos %}
+      <div class="t"><a href="{{ url('gallery', {'topic': photo[0].topic}) }}">{{ photo[0].topic}}</a></div>
+    <div class="jcarousel-wrapper">
+        <div class="jcarousel">
+            <ul>
+            {% for objphoto in photo %}
+                    <li>
+                    <a href="{{ objphoto.photo.path }}" target="_blank"><img src="{{ objphoto.photo.path }}" width="620px" height="435px"/></a>
+                     <div id="desc"><h3>{{ objphoto.title }} - {{ objphoto.date | date ('d.m.Y-H:i') }} </h3></div>
+                    </li>
+               
+            {% endfor %}
+            </ul>
+        </div>
+        <a href="#" class="jcarousel-control-prev">&lsaquo;</a>
+        <a href="#" class="jcarousel-control-next">&rsaquo;</a>
+        <p class="jcarousel-pagination"></p>
+    </div>
+    {% endfor %}
+
+
+
+<h2>Загрузить фото</h2>
+
+<form action="./" enctype="multipart/form-data" method="post">
+
+    {{ form_widget(uploadForm) }}
+    <input type="submit" value="Загрузить фото"/>
+</form></center>{% endblock %}

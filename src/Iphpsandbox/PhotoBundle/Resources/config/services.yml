@@ -1,0 +1,4 @@
+services:
+#    iphpsandbox_photo.example:
+#        class: Iphpsandbox\PhotoBundle\Example
+#        arguments: ["@service_id", "plain_value", "%parameter%"]

@@ -25,6 +25,7 @@ class NewsController extends Controller
     public function newAction(Request $request)
     {
         $news = new News();
+        $news->setDate(new \DateTime());
         $form = $this->createFormBuilder($news)
             ->add('title','text')
             ->add('date','date')
