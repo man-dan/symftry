@@ -25,8 +25,8 @@ class AppKernel extends Kernel
             new Sonata\CoreBundle\SonataCoreBundle(),
             new \Sonata\jQueryBundle\SonatajQueryBundle(),
             // ...,
-            new Iphpsandbox\PhotoBundle\IphpsandboxPhotoBundle(),
             new Symfony\Bundle\AsseticBundle\AsseticBundle(),
+            new GalleryBundle\GalleryBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'), true)) {

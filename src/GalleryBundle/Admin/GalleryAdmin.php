@@ -2,27 +2,30 @@
 /**
  * Created by PhpStorm.
  * User: root
- * Date: 20.05.17
- * Time: 17:48
+ * Date: 29.05.17
+ * Time: 21:40
  */
 
-namespace Iphpsandbox\PhotoBundle\Admin;
+namespace GalleryBundle\Admin;
 
-use Doctrine\DBAL\Types\BooleanType;
-use Sonata\AdminBundle\Admin\Admin;
-use Sonata\AdminBundle\Form\FormMapper;
+use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\ListMapper;
+use Sonata\AdminBundle\Datagrid\DatagridMapper;
+use Sonata\AdminBundle\Form\FormMapper;
 use Iphp\FileStoreBundle\Form\Type\FileType as IphpFileType;
 
-class PhotoAdmin extends Admin
+class GalleryAdmin extends AbstractAdmin
 {
     protected function configureListFields(ListMapper $listMapper)
     {
         return $listMapper->addIdentifier('title')
             ->add('topic')
             ->add ('date')
-            ->add('active');
+            ->add('photo')
+            ->add('active')
+            ->add('fnews');
     }
+
 
     protected function configureFormFields(FormMapper $formMapper)
     {
@@ -30,6 +33,7 @@ class PhotoAdmin extends Admin
             ->add('topic','text',['label'=>'Тематика'])
             ->add ('date','datetime',['data'=>new \DateTime(),'label'=>'Дата'])
             ->add('photo', IphpFileType::class)
+            ->add('fnews')
             ->add('active');
     }
 }

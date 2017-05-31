@@ -10,6 +10,8 @@ namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints\Date;
+use Doctrine\Common\Collections\ArrayCollection;
+
 
 /**
  * @ORM\Entity
@@ -40,10 +42,14 @@ class News
     private $title;
 
     /**
-     * @ORM\Column(type="date")
+     * @ORM\Column(type="datetime")
      */
     private $date;
 
+    /**
+     * @ORM\Column(type="text")
+     */
+    private $descr;
     /**
      * @return mixed
      */
@@ -60,11 +66,13 @@ class News
     {
         $this->title = $title;
     }
-
+    public function __toString() {
+        return $this->id;
+    }
     /**
-     * @return mixed
+     * @return \Datetime
      */
-    public function setDate(\DateTime $date = null)
+    public function setDate(\DateTime $date)
     {
         $this->date  = $date;
     }
@@ -78,4 +86,27 @@ class News
     }
 
 
+    /**
+     * Set descr
+     *
+     * @param string $descr
+     *
+     * @return News
+     */
+    public function setDescr($descr)
+    {
+        $this->descr = $descr;
+
+        return $this;
+    }
+
+    /**
+     * Get descr
+     *
+     * @return string
+     */
+    public function getDescr()
+    {
+        return $this->descr;
+    }
 }

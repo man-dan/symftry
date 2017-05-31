@@ -1,0 +1,9 @@
+services:
+#    gallery.example:
+#        class: GalleryBundle\Example
+#        arguments: ["@service_id", "plain_value", "%parameter%"]
+   admin.gallery:
+        class: GalleryBundle\Admin\GalleryAdmin
+        arguments: [~, GalleryBundle\Entity\Gallery, ~]
+        tags:
+            - { name: sonata.admin, manager_type: orm, label: Gallery, group: Галлереи }

@@ -1,6 +1,7 @@
-iphpsandbox_photo:
-    resource: "@IphpsandboxPhotoBundle/Controller/"
+gallery:
+    resource: "@GalleryBundle/Controller/"
     type:     annotation
+    prefix:   /
 
 app:
     resource: '@AppBundle/Controller/'

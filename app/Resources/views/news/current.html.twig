@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+{% block title %}{{ title }}{% endblock %}
+{% block body %}
+
+    </br>
+<center>
+    <a href="{{ url('newsn') }}">К новостям</a>
+
+    {% for post in news %}
+
+        <h2>{{ post.title }}</h2>
+        <td><h4>{{ post.title }} - {{ post.date | date ('d.m.Y-H:i') }} </h4></td>
+        <h4>{{ post.descr }}</h4>
+    {% endfor%}
+
+    {% for photo in fnews %}
+        <div class="t"><a href="{{ url('curgallery', {'topic': photo[0].topic}) }}">Gallery-{{ photo[0].topic}}</a></div>
+        <div class="jcarousel-wrapper">
+            <div class="jcarousel">
+                <ul>
+                    {% for objphoto in photo %}
+                        <li>
+                            <a href="{{ objphoto.photo.path }}" target="_blank"><img src="{{ objphoto.photo.path }}" width="620px" height="435px"/></a>
+                            <div id="desc"><h3>{{ objphoto.title }} - {{ objphoto.date | date ('d.m.Y-H:i') }} </h3></div>
+                        </li>
+
+                    {% endfor %}
+                </ul>
+            </div>
+            <a href="#" class="jcarousel-control-prev">&lsaquo;</a>
+            <a href="#" class="jcarousel-control-next">&rsaquo;</a>
+            <p class="jcarousel-pagination"></p>
+        </div>
+    {% endfor %}
+
+
+</center>
+{% endblock %}

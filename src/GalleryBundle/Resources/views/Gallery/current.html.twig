@@ -4,7 +4,8 @@
 
 {% block body %}
 <center>
-<h2>Загруженные фотографии галлереи:<div class="t"><a href="{{ url('gallery', {'topic': photos[0].topic}) }}">{{ photos[0].topic}}</a></div></h2>
+    <div class="t"><a href="{{ url('curr', {'id': photos[0].fnews.id}) }}">Обратно к новости-{{ photos[0].fnews }}</a></div>
+<h2>Загруженные фотографии галлереи:<div class="t"><a href="{{ url('curgallery', {'topic': photos[0].topic}) }}">{{ photos[0].topic}}</a></div></h2>
 <br>
     <ul>
       {% for photo in photos %}
