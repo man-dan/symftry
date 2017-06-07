@@ -9,11 +9,11 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * Gallery
  *
- * @ORM\Table(name="gallery")
- * @ORM\Entity(repositoryClass="GalleryBundle\Repository\GalleryRepository")
+ * @ORM\Table(name="photos")
+ * @ORM\Entity(repositoryClass="GalleryBundle\Repository\PhotoRepository")
  * @FileStore\Uploadable
  */
-class Gallery
+class Photo
 {
     /**
      * @var int
@@ -36,6 +36,14 @@ class Gallery
      */
     private $active;
 
+    /**
+     * @ORM\Column(type="array")
+     * @Assert\File( maxSize="20M")
+     * @FileStore\UploadableField(mapping="photo")
+     **/
+    private $photo;
+
+
 
     /**
      * @Assert\DateTime()
@@ -44,15 +52,10 @@ class Gallery
     private $date;
 
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Newsn", inversedBy="galleries")
-     * @ORM\JoinColumn(name="fnews_id", referencedColumnName="id")
+     * @ORM\ManyToOne(targetEntity="GalleryBundle\Entity\Gallery", inversedBy="gphotos")
+     * @ORM\JoinColumn(name="photo_id", referencedColumnName="id")
      */
-    private $fnews;
-
-    /**
-     *@ORM\OneToMany(targetEntity="GalleryBundle\Entity\Photo", mappedBy="photos")
-     */
-    private $gphotos;
+    private $photos;
 
     public function __toString()
     {
@@ -118,29 +121,6 @@ class Gallery
         return $this->date;
     }
 
-    /**
-     * Set fnews
-     *
-     * @param \AppBundle\Entity\Newsn $fnews
-     *
-     * @return Photo
-     */
-    public function setFnews(\AppBundle\Entity\Newsn $fnews = null)
-    {
-        $this->fnews = $fnews;
-
-        return $this;
-    }
-
-    /**
-     * Get fnews
-     *
-     * @return \AppBundle\Entity\Newsn
-     */
-    public function getFnews()
-    {
-        return $this->fnews;
-    }
 
     /**
      * Set active
@@ -166,46 +146,4 @@ class Gallery
         return $this->active;
     }
 
-
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->gphotos = new \Doctrine\Common\Collections\ArrayCollection();
-    }
-
-    /**
-     * Add gphoto
-     *
-     * @param \GalleryBundle\Entity\Photo $gphoto
-     *
-     * @return Gallery
-     */
-    public function addGphoto(\GalleryBundle\Entity\Photo $gphoto)
-    {
-        $this->gphotos[] = $gphoto;
-
-        return $this;
-    }
-
-    /**
-     * Remove gphoto
-     *
-     * @param \GalleryBundle\Entity\Photo $gphoto
-     */
-    public function removeGphoto(\GalleryBundle\Entity\Photo $gphoto)
-    {
-        $this->gphotos->removeElement($gphoto);
-    }
-
-    /**
-     * Get gphotos
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getGphotos()
-    {
-        return $this->gphotos;
-    }
 }

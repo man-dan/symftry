@@ -14,7 +14,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
-use GalleryBundle\Entity\Gallery;
+use GalleryBundle\Entity\Photo;
 
 
 
@@ -40,24 +40,16 @@ class NewsnController extends Controller
     {
 
         $news = $this->getDoctrine()->getRepository('AppBundle:Newsn')->findBy(['id'=>$id]);
-        $photos = $this->getDoctrine()->getRepository('GalleryBundle:Gallery')
+        $gallery = $this->getDoctrine()->getRepository('GalleryBundle:Gallery')
             ->findBy(['fnews'=>$id,'active'=>1]);
+        $photos = $this->getDoctrine()->getRepository('GalleryBundle:Photo')
+            ->findBy(['photos'=>$gallery[0]->getId()]);
         return $this->render('news/current.html.twig',
-            [   'fnews'=>$this->groupByTopic($photos),
+            [   'fnews'=>$gallery,
+                'photos'=>$photos,
                 'news'=>$news,
                 'title'=>'Текущая новость']);
 
     }
 
-    public function groupByTopic($arr)
-    {
-        $groupedArr = [];
-        foreach ($arr as $data)
-        {
-            $groupedArr[$data->getTopic()][] = $data;
-        }
-        return $groupedArr;
-
-
-    }
 }

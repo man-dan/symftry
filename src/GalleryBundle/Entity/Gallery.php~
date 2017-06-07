@@ -36,17 +36,6 @@ class Gallery
      */
     private $active;
 
-    /**
-     * @ORM\Column(type="array")
-     * @Assert\File( maxSize="20M")
-     * @FileStore\UploadableField(mapping="photo")
-     **/
-    private $photo;
-
-    /**
-     * @ORM\Column(name="topic", type="string", length=255)
-     */
-    private $topic;
 
     /**
      * @Assert\DateTime()
@@ -60,9 +49,16 @@ class Gallery
      */
     private $fnews;
 
+    /**
+     *@ORM\OneToMany(targetEntity="GalleryBundle\Entity\Photo", mappedBy="photos")
+     */
+    private $gphotos;
+
     public function __toString()
     {
-        return $this->topic;
+        if(is_null($this->title))
+            return 'Null';
+        return $this->title;
     }
     /**
      * Get id
@@ -79,7 +75,7 @@ class Gallery
      *
      * @param string $title
      *
-     * @return Gallery
+     * @return Photo
      */
     public function setTitle($title)
     {
@@ -103,7 +99,7 @@ class Gallery
      *
      * @param \DateTime $date
      *
-     * @return Gallery
+     * @return Photo
      */
     public function setDate($date)
     {
@@ -127,7 +123,7 @@ class Gallery
      *
      * @param \AppBundle\Entity\Newsn $fnews
      *
-     * @return Gallery
+     * @return Photo
      */
     public function setFnews(\AppBundle\Entity\Newsn $fnews = null)
     {
@@ -151,7 +147,7 @@ class Gallery
      *
      * @param boolean $active
      *
-     * @return Gallery
+     * @return Photo
      */
     public function setActive($active)
     {
@@ -170,51 +166,46 @@ class Gallery
         return $this->active;
     }
 
+
     /**
-     * Set topic
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->gphotos = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add gphoto
      *
-     * @param string $topic
+     * @param \GalleryBundle\Entity\Photo $gphoto
      *
      * @return Gallery
      */
-    public function setTopic($topic)
+    public function addGphoto(\GalleryBundle\Entity\Photo $gphoto)
     {
-        $this->topic = $topic;
+        $this->gphotos[] = $gphoto;
 
         return $this;
     }
 
     /**
-     * Get topic
+     * Remove gphoto
      *
-     * @return string
+     * @param \GalleryBundle\Entity\Photo $gphoto
      */
-    public function getTopic()
+    public function removeGphoto(\GalleryBundle\Entity\Photo $gphoto)
     {
-        return $this->topic;
+        $this->gphotos->removeElement($gphoto);
     }
 
     /**
-     * Set photo
+     * Get gphotos
      *
-     * @param array $photo
-     *
-     * @return Gallery
+     * @return \Doctrine\Common\Collections\Collection
      */
-    public function setPhoto($photo)
+    public function getGphotos()
     {
-        $this->photo = $photo;
-
-        return $this;
-    }
-
-    /**
-     * Get photo
-     *
-     * @return array
-     */
-    public function getPhoto()
-    {
-        return $this->photo;
+        return $this->gphotos;
     }
 }

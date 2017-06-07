@@ -14,15 +14,16 @@ use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Iphp\FileStoreBundle\Form\Type\FileType as IphpFileType;
 
-class GalleryAdmin extends AbstractAdmin
+class PhotoAdmin extends AbstractAdmin
 {
     protected function configureListFields(ListMapper $listMapper)
     {
         return $listMapper->addIdentifier('title')
             ->add ('date')
-            ->add('gphotos')
-            ->add('active')
-            ->add('fnews');
+            ->add('photo')
+            ->add('photos')
+            ->add('active');
+
     }
 
 
@@ -30,8 +31,8 @@ class GalleryAdmin extends AbstractAdmin
     {
         return $formMapper->add('title','text',['label'=>'Название'])
             ->add ('date','datetime',['data'=>new \DateTime(),'label'=>'Дата'])
-            ->add('gphotos')
-            ->add('fnews')
+            ->add('photo', IphpFileType::class)
+            ->add('photos')
             ->add('active');
     }
 }

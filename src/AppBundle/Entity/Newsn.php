@@ -163,11 +163,11 @@ class Newsn
     /**
      * Add gallery
      *
-     * @param \GalleryBundle\Entity\Gallery $gallery
+     * @param \GalleryBundle\Entity\Photo $gallery
      *
      * @return Newsn
      */
-    public function addGallery(\GalleryBundle\Entity\Gallery $gallery)
+    public function addGallery(\GalleryBundle\Entity\Photo $gallery)
     {
         $this->galleries[] = $gallery;
 
@@ -177,9 +177,9 @@ class Newsn
     /**
      * Remove gallery
      *
-     * @param \GalleryBundle\Entity\Gallery $gallery
+     * @param \GalleryBundle\Entity\Photo $gallery
      */
-    public function removeGallery(\GalleryBundle\Entity\Gallery $gallery)
+    public function removeGallery(\GalleryBundle\Entity\Photo $gallery)
     {
         $this->galleries->removeElement($gallery);
     }

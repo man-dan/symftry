@@ -45,6 +45,8 @@ class Newsn
     }
     public function __toString()
     {
+        if(is_null($this->title))
+            return 'Null';
        return $this->title;
     }
 
@@ -157,4 +159,38 @@ class Newsn
         $this->active = $active;
     }
 
+
+    /**
+     * Add gallery
+     *
+     * @param \GalleryBundle\Entity\Photo $gallery
+     *
+     * @return Newsn
+     */
+    public function addGallery(\GalleryBundle\Entity\Photo $gallery)
+    {
+        $this->galleries[] = $gallery;
+
+        return $this;
+    }
+
+    /**
+     * Remove gallery
+     *
+     * @param \GalleryBundle\Entity\Photo $gallery
+     */
+    public function removeGallery(\GalleryBundle\Entity\Photo $gallery)
+    {
+        $this->galleries->removeElement($gallery);
+    }
+
+    /**
+     * Get galleries
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getGalleries()
+    {
+        return $this->galleries;
+    }
 }
