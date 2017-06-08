@@ -13,16 +13,18 @@
         <h4>{{ post.descr }}</h4>
     {% endfor%}
     {% for photo in photos %}
-
+        <div class="t"><a href="{{ url('curgallery', {'title': fnews[loop.index-1].title}) }}">Gallery-{{ fnews[loop.index-1].title}}</a></div>
         <div class="jcarousel-wrapper">
-            <div class="jcarousel">
-                <ul>
-                        <li>
-                            <a href="{{photo.photo.path}}" target="_blank"><img src="{{ photo.photo.path }}" width="620px" height="435px"/></a>
-                            <div id="desc"><h3>{{ photo.title }} - {{ photo.date | date ('d.m.Y-H:i') }} </h3></div>
-                        </li>
-                </ul>
-            </div>
+        <div class="jcarousel">
+        <ul>
+        {% for cphoto in photo %}
+            <li>
+                <a href="{{cphoto.photo.path}}" target="_blank"><img src="{{ cphoto.photo.path }}" width="620px" height="435px"/></a>
+                <div id="desc"><h3>{{ cphoto.title }} - {{ cphoto.date | date ('d.m.Y-H:i') }} </h3></div>
+            </li>
+        {% endfor %}
+        </ul>
+        </div>
             <a href="#" class="jcarousel-control-prev">&lsaquo;</a>
             <a href="#" class="jcarousel-control-next">&rsaquo;</a>
             <p class="jcarousel-pagination"></p>

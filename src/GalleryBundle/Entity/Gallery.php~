@@ -50,7 +50,7 @@ class Gallery
     private $fnews;
 
     /**
-     *@ORM\OneToMany(targetEntity="GalleryBundle\Entity\Photo", mappedBy="photos")
+     *@ORM\OneToMany(targetEntity="GalleryBundle\Entity\Photo", mappedBy="gallery")
      */
     private $gphotos;
 

@@ -21,7 +21,7 @@ class PhotoAdmin extends AbstractAdmin
         return $listMapper->addIdentifier('title')
             ->add ('date')
             ->add('photo')
-            ->add('photos')
+            ->add('gallery')
             ->add('active');
 
     }
@@ -32,7 +32,7 @@ class PhotoAdmin extends AbstractAdmin
         return $formMapper->add('title','text',['label'=>'Название'])
             ->add ('date','datetime',['data'=>new \DateTime(),'label'=>'Дата'])
             ->add('photo', IphpFileType::class)
-            ->add('photos')
+            ->add('gallery')
             ->add('active');
     }
 }

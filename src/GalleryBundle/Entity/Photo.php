@@ -55,7 +55,7 @@ class Photo
      * @ORM\ManyToOne(targetEntity="GalleryBundle\Entity\Gallery", inversedBy="gphotos")
      * @ORM\JoinColumn(name="photo_id", referencedColumnName="id")
      */
-    private $photos;
+    private $gallery;
 
     public function __toString()
     {
@@ -171,27 +171,29 @@ class Photo
         return $this->photo;
     }
 
+
+
     /**
-     * Set photos
+     * Set gallery
      *
-     * @param \GalleryBundle\Entity\Gallery $photos
+     * @param \GalleryBundle\Entity\Gallery $gallery
      *
      * @return Photo
      */
-    public function setPhotos(\GalleryBundle\Entity\Gallery $photos = null)
+    public function setGallery(\GalleryBundle\Entity\Gallery $gallery = null)
     {
-        $this->photos = $photos;
+        $this->gallery = $gallery;
 
         return $this;
     }
 
     /**
-     * Get photos
+     * Get gallery
      *
      * @return \GalleryBundle\Entity\Gallery
      */
-    public function getPhotos()
+    public function getGallery()
     {
-        return $this->photos;
+        return $this->gallery;
     }
 }

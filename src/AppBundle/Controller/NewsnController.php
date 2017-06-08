@@ -39,17 +39,26 @@ class NewsnController extends Controller
     public function read_newsAction($id, Request $request)
     {
 
-        $news = $this->getDoctrine()->getRepository('AppBundle:Newsn')->findBy(['id'=>$id]);
+        $news = $this->getDoctrine()->getRepository('AppBundle:Newsn')->findBy(['id' => $id, 'active' => 1]);
         $gallery = $this->getDoctrine()->getRepository('GalleryBundle:Gallery')
-            ->findBy(['fnews'=>$id,'active'=>1]);
-        $photos = $this->getDoctrine()->getRepository('GalleryBundle:Photo')
-            ->findBy(['photos'=>$gallery[0]->getId()]);
+            ->findBy(['fnews' => $id, 'active' => 1]);
+        $photos_gallery = $this->getPhotos($gallery);
+
         return $this->render('news/current.html.twig',
             [   'fnews'=>$gallery,
-                'photos'=>$photos,
+                'photos'=>$photos_gallery,
                 'news'=>$news,
                 'title'=>'Текущая новость']);
-
     }
 
+    public function getPhotos($arr)
+    {
+        $arrPhotos = [];
+        foreach ($arr as $id){
+            $arrPhotos[] = $this->getDoctrine()->getRepository('GalleryBundle:Photo')
+                ->findBy(['gallery'=>$id->getId(),'active'=>1]);
+        }
+
+        return $arrPhotos;
+    }
 }
